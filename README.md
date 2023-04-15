@@ -2,7 +2,12 @@
 Following CMuratori's computer enhance course
 
 # The aim of the repository:
-To use the whole toolchain and have some incentive to make something decent and with readable code.
+To share and have some incentive to make something decent and with readable code.
+
+The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions. As such the code is written basicly with the aim of creating a simple 8086 emulator.
+
+The biggest tool for accomplishing this is the 8086 User's Manual:
+https://edge.edx.org/c4x/BITSPilani/EEE231/asset/8086_family_Users_Manual_1_.pdf
 
 # Style of coding - Playground/No principal scheme
 Being somewhat influenced by the course creator the code is not designed around classes and methods.
@@ -13,20 +18,19 @@ There is some aim to keep it structured and learn how to do this properly in C/C
 Only one CMakeLists.txt is used, which builds all the source files into one executable.
 
 # Files and types
-For now it is mostly built around two structs:
-- One that holds the instruction cache of the CPU:
+For now the code has it's state contained within two structs:
+- CPU instruction cache:
     - Memory
     - Current offset 
     - Total bytes 
-- Another struct that holds the register and flag state of CPU
+- CPU state
     - 8 registers that is 16bit wide.
-    - The CPU can address the first 4 as a wide(x), or as high(h) and low(l).
-    - 8 flags are also present in the CPU.
-    - This whole struct is initialized with zeros at the beginning of main.
+    - The first 4 registers are defined as unions as they can be subadressed by the 8086 CPU
+    - 8 flags of the CPU.
     
 # Tasks in main
 1. User interaction
-2. Creating CPU state
+2. Create and init CPU state
 3. Creating Instruction cache and loading instructions
 4. Decoding the instructions in the cache
 5. Cleaning up
