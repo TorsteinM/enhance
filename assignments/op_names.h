@@ -3,6 +3,7 @@
 
 // Bitmask for operation name
 #define OP_NAME_MASK 0b11111000
+#define OP_3BIT_MASK 0b00111000
 
 // Usage 1: Mask the first 5 bits if the instruction is lower than 0x60
 // Usage 2: Mask 3 bits for [ADD,OR,ADC,SBB,AND,SUB,XOR,CMP] patterned instructions

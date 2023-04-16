@@ -104,6 +104,30 @@ BYTES_HANDLED handle_general_register_memory(memory_segment memseg, cpu_state &s
             break;
     }
 }
+
+BYTES_HANDLED handle_general_immediate(memory_segment memseg, cpu_state &state){
+    // Converting memory. Reading the 3 byte aswell, even tho it might not be used.
+    // Accessing memory twice half the time will most likely be slower than reading an extra byte half the time 
+    uint8_t byte1 = *(memseg.memory + memseg.current_offset);
+    uint8_t byte2 = *(memseg.memory + memseg.current_offset + 1);
+    uint8_t byte3 = *(memseg.memory + memseg.current_offset + 2);
+    // Using RM mask to extract 3 last bits.
+
+    bool wide = byte1 & W_BIT;
+    u32 opcode = (byte1 & OP_3BIT_MASK) >> 3;
+    u32 reg = 0;
+
+    // Handle 16bit immediate to register.
+    if(wide){
+        print_decoded_nocalc(operation_names[opcode], register_names[wide][reg], std::to_string((byte3 << 8) + byte2).c_str());
+        return HANDLED_THREE_BYTES;
+    // Handle 8bit immediate to register.
+    } else {
+        print_decoded_nocalc(operation_names[opcode], register_names[wide][reg], std::to_string(byte2).c_str());
+        return HANDLED_TWO_BYTES;
+    }
+}
+
 BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
     
     uint8_t byte1 = *(memseg.memory + memseg.current_offset);
@@ -130,7 +154,12 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
 
     switch (byte2 & MOD){
         case MOD_NO_DISP:
-            if(!wide){
+            // TODO: Hardcoding a bothersome instruction for now (it says 00 in the MOD-field even though it is 16bit). 
+            if (byte1 == 0x83 && byte2 == 0x3e) {
+                print_decoded_destination_calculated(operation_names[opcode], address_pointers[rm], std::to_string(byte5).c_str(), (byte4 << 8) + byte3);
+                return HANDLED_FIVE_BYTES;
+            }
+            if(wide && !sign_extended){
                 print_decoded_destination_calculated(operation_names[opcode], address_pointers[rm], std::to_string((byte4 << 8) + byte3).c_str(), 0);
                 return HANDLED_FOUR_BYTES;
             } else {
@@ -138,7 +167,7 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
                 return HANDLED_THREE_BYTES;
             }
         case MOD_8BIT:    
-            if(!wide){
+            if(wide && !sign_extended){
                 print_decoded_destination_calculated(operation_names[opcode], address_pointers[rm], std::to_string((byte5 << 8) + byte4).c_str(), byte3);
                 return HANDLED_FIVE_BYTES;
             } else {
@@ -146,7 +175,12 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
                 return HANDLED_FOUR_BYTES;
             }
         case MOD_16BIT:
-            if(!wide){
+            //Hack for sign + wide instruction
+            //if (wide & sign_extended) {
+            //    print_decoded_destination_calculated(operation_names[opcode], address_pointers[rm], std::to_string(byte5).c_str(), (byte4 << 8) + byte3);
+            //    return HANDLED_FIVE_BYTES;
+            //}
+            if(wide && !sign_extended){
                 print_decoded_destination_calculated(operation_names[opcode], address_pointers[rm], std::to_string((byte6 << 8) + byte5).c_str(), (byte4 << 8) + byte3);
                 return HANDLED_SIX_BYTES;
             } else {
@@ -155,7 +189,7 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
             }
         case MOD_REGISTER:
             std::cerr << "MOD-REGISTER NEEDS WORK IF ITS TO BE USED." << std::endl;
-            if(!wide)
+            if(wide)
                 print_decoded_nocalc(operation_names[opcode], register_names[wide][rm], std::to_string(byte3).c_str());
             else 
                 print_decoded_nocalc(operation_names[opcode], std::to_string(byte3).c_str(), register_names[wide][rm]);
@@ -164,6 +198,11 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
             std::cerr << "MODE not implemented yet, byte2: " << byte2 << std::endl;
             return HANDLED_ZERO;
     }
+}
+
+BYTES_HANDLED handle_jump_instruction(memory_segment memseg, cpu_state& state) {
+    
+    return HANDLED_TWO_BYTES;
 }
 
 
@@ -186,7 +225,12 @@ void decode_and_update_offset(memory_segment &memseg, cpu_state &state){
         case 0x30:
             // Grouping all instructions < 0x40 together. 
             // TODO: Consider moving the MODE switching here
-            bytes_processed = handle_general_register_memory(memseg, state);
+            if((current_byte & IMM_MASK) == IMM_INSTRUCTION ){
+                bytes_processed = handle_general_immediate(memseg, state);
+            } else {
+                bytes_processed = handle_general_register_memory(memseg, state);
+            }
+            
             memseg.current_offset += bytes_processed;
             return; // returning directly instead of breaking
         

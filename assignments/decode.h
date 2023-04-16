@@ -29,9 +29,15 @@ void print_decoded_destination_calculated(const char* instr, const char* dest, c
 // Handles instruction, updates cpu/register state
 BYTES_HANDLED handle_mov_immediate(memory_segment, cpu_state&);
 
-// Attempting to write a general function and kneeding out some pattern that handles a good chunk of instructions
+
+// Attempting to write a general functions and kneeding out some pattern that handles a good chunk of instructions
 // Relies on the operation_names[], register_names[] and address_pointers[] to present the mnemonics in asm format. 
 BYTES_HANDLED handle_general_register_memory(memory_segment memseg, cpu_state &state);
 
 BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state);
+
+BYTES_HANDLED handle_general_immediate(memory_segment memseg, cpu_state &state);
+
+BYTES_HANDLED handle_jump_instruction(memory_segment memseg, cpu_state& state);
+
 #endif

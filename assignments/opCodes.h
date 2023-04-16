@@ -21,6 +21,11 @@
 #define MOV_IMM_REG 0b00000111
 // BITMASK for SIGN Extension
 #define SIGN_EXT_BIT 0b00000010
+// BITMASK for immediate instruction
+#define IMM_MASK     0b00000110
+
+// Field for control
+#define IMM_INSTRUCTION 0b00000100
 
 // INSTRUCTIONS ON 4 first BITS
 #define MOV_IMMIDIATE 0b10110000
