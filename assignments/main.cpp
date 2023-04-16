@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
 
     // 4. Executing the instructions in memory
     while(instruction_cache.current_offset < instruction_cache.bytes_currently_read){
-        std::cout << "Handling instruction at offset: " << instruction_cache.current_offset << std::endl; 
+        //std::cout << "Handling instruction at offset: " << instruction_cache.current_offset << std::endl; 
         decode_and_update_offset(instruction_cache, state_8086);
     }
 

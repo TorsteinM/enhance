@@ -29,11 +29,13 @@ BYTES_HANDLED handle_mov_immediate(memory_segment memseg, cpu_state &state){
 
     // Handle 16bit immediate to register.
     if(byte1 & MOV_IMM_WITDH){
-        std::cout << "MOV " << register_names[1][reg] << ", " << (int)((byte3 << 8) + byte2) << std::endl;
+        std::cout << "MOV " << register_names[1][reg] << ", " << ((byte3 << 8) + byte2) << std::endl;
+        update_value_to_register(state, (operation)12, reg, (byte3 << 8) + byte2, true);
         return HANDLED_THREE_BYTES;
     // Handle 8bit immediate to register.
     } else {
         std::cout << "MOV " << register_names[0][reg] << ", " << (int)byte2 << std::endl;
+        update_value_to_register(state, (operation)12, reg, byte2, false);
         return HANDLED_TWO_BYTES;
     }
 }
@@ -201,7 +203,7 @@ BYTES_HANDLED handle_general_memory(memory_segment memseg, cpu_state &state){
 }
 
 BYTES_HANDLED handle_jump_instruction(memory_segment memseg, cpu_state& state) {
-    
+    // Jumping over this atm
     return HANDLED_TWO_BYTES;
 }
 

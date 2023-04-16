@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <iostream>
-
+#include "typedefs.h"
 #include "reg_names.h"
 
 
@@ -59,11 +59,51 @@ typedef struct {
 
 
 struct cpu_state {
-    cpu_state_t registers;
+    union{
+        cpu_state_t registers;
+        int16_t register_as_wides[8];
+        int8_t register_as_bytes[16];
+    };
+    
     flags_t flags;
 };
 
+enum operation{ 
+    ADD,  //  0
+    OR,   //  1
+    ADC,  //  2
+    SBB,  //  3
+    AND,  //  4
+    SUB,  //  5
+    XOR,  //  6
+    CMP,  //  7
+    INC,  //  8
+    DEC,  //  9
+    PUSH, // 10
+    POP,  // 11
+    MOV,  // 12
+    NR13,     // 13
+    NR14,     // 14
+    NR15,     // 15
+    NR16,     // 16
+    NR17,     // 17
+    NR18,     // 18
+    NR19,     // 19
+    NR20,     // 20
+    NR21,     // 21
+    NR22,     // 22
+    NR23,     // 23
+    ROL,     // 24
+    ROR,     // 25
+    RCL,     // 26
+    RCR,     // 27
+    SAL_SHL,     // 28
+    SHR,     // 29
+    NR30,     // 30
+    SAR     // 31 
+    };
+
 
 void display_regs(cpu_state);
-
+void update_value_to_register(cpu_state &, operation, u32, u32, bool);
 #endif // CPU_STATE_H
