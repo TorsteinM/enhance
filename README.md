@@ -4,7 +4,7 @@ Following CMuratori's computer enhance course
 # The aim of the repository
 To practice building software generally and how to interface hardware in a practical way with readable code.  
 
-To share and have some incentive to make something decent and with readable code.
+To share and have some incentive to make something decent and structured.
 
 # What does the code do
 The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions.
