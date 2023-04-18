@@ -24,7 +24,7 @@ Common sense would be to keep the code readable, modular and trying to avoid sid
 It is hard to avoid repeating code entirely, but hopefully some patterns will emerge where repetitions seem to be unavoidable.
 
 # CMake - compiling one executable: sim86
-Only one CMakeLists.txt is used, which builds all the source files into one executable.
+Only one CMakeLists.txt is used, which sets up a build that compiles all the source files into one executable.
 
 # Files and types
 For now the code has it's state contained within two structs:
