@@ -2,7 +2,7 @@
 Following CMuratori's computer enhance course
 
 # The aim of the repository:
-To practice building software generally, but also practicing interfacing the hardware and experience techniques that are   
+To practice building software generally and how to interface hardware in a practical way with readable code.  
 
 To share and have some incentive to make something decent and with readable code.
 
@@ -20,7 +20,7 @@ Common sense would be to keep the code readable, modular and trying to avoid sid
 
 It is hard to avoid repeating code entirely, but hopefully some patterns will emerge where repetitions seem to be unavoidable.
 
-# CMake - building one sim86.exe
+# CMake - compiling one executable: sim86
 Only one CMakeLists.txt is used, which builds all the source files into one executable.
 
 # Files and types
