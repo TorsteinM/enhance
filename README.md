@@ -2,6 +2,8 @@
 Following CMuratori's computer enhance course
 
 # The aim of the repository:
+To practice building software generally, but also practicing interfacing the hardware and experience techniques that are   
+
 To share and have some incentive to make something decent and with readable code.
 
 The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions. As such the code is written basicly with the aim of creating a simple 8086 emulator.
@@ -14,7 +16,11 @@ Being somewhat influenced by the course creator the code is not designed around 
 
 There is some aim to keep it structured and learn how to do this properly in C/C++ by trying to code it by common sense.
 
-# CMake - only basic options
+Common sense would be to keep the code readable, modular and trying to avoid side effects in functions.
+
+It is hard to avoid repeating code entirely, but hopefully some patterns will emerge where repetitions seem to be unavoidable.
+
+# CMake - building one sim86.exe
 Only one CMakeLists.txt is used, which builds all the source files into one executable.
 
 # Files and types
@@ -27,12 +33,14 @@ For now the code has it's state contained within two structs:
     - 8 registers that is 16bit wide.
     - The first 4 registers are defined as unions as they can be subadressed by the 8086 CPU
     - 8 flags of the CPU.
+
+The instructions themselves could be written as objects, but as it's a project that is growing they are handled directly. Making them into objects at some point would be preferable, to get all the benefits of having them read serially and h
     
 # Tasks in main
 1. User interaction
 2. Create and init CPU state
 3. Creating Instruction cache and loading instructions
-4. Decoding the instructions in the cache
+4. Decoding and executing the instructions in the cache
 5. Cleaning up
 
   
