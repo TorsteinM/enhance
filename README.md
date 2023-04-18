@@ -1,12 +1,15 @@
 # enhance
 Following CMuratori's computer enhance course
 
-# The aim of the repository:
+# The aim of the repository
 To practice building software generally and how to interface hardware in a practical way with readable code.  
 
 To share and have some incentive to make something decent and with readable code.
 
-The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions. As such the code is written basicly with the aim of creating a simple 8086 emulator.
+# What does the code do
+The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions.
+
+As such the code is written to read 8086 machine code, decode instructions and simulate what the processor would do with them.
 
 The biggest tool for accomplishing this is the 8086 User's Manual:
 https://edge.edx.org/c4x/BITSPilani/EEE231/asset/8086_family_Users_Manual_1_.pdf
