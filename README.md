@@ -6,7 +6,15 @@ To practice building software generally and how to interface hardware in a pract
 
 To share and have some incentive to make something decent and structured.
 
-# What does the code do
+# Part 2: haversine
+So far there is code to generate random points on a sphere and using a reference function to calculate the difference between them.
+
+## Generating sphere points
+There are two methods implemented to generate random points on a sphere. One is the naiv implementation of creating two random angles for latitude and longitude, while the other one takes a clustered approach.
+
+The need for a different approach than naive uniform angles is so that the average distance between points doesn't converge to some value. 
+
+# Part 1: sim8086
 The assignments for the first part of the course is pretty much to emulate a handful of 8086 CPU instructions.
 
 As such the code is written to read 8086 machine code, decode instructions and simulate what the processor would do with them.
@@ -14,7 +22,7 @@ As such the code is written to read 8086 machine code, decode instructions and s
 The biggest tool for accomplishing this is the 8086 User's Manual:
 https://edge.edx.org/c4x/BITSPilani/EEE231/asset/8086_family_Users_Manual_1_.pdf
 
-# Style of coding - Playground/No principal scheme
+## Coding style
 Being somewhat influenced by the course creator the code is not designed around classes and methods.
 
 There is some aim to keep it structured and learn how to do this properly in C/C++ by trying to code it by common sense.
@@ -23,10 +31,14 @@ Common sense would be to keep the code readable, modular and trying to avoid sid
 
 It is hard to avoid repeating code entirely, but hopefully some patterns will emerge where repetitions seem to be unavoidable.
 
-# CMake - compiling one executable: sim86
-Only one CMakeLists.txt is used, which sets up a build that compiles all the source files into one executable.
+## Poor integration during first implementation
+The nature of incremental assignments on something that builds to something larger, together with my blind spots and misconceptions, lead to poor integration of the workings of a 8086. 
 
-# Files and types
+A nice experience to see the lack of precision creeping in, making it progressively harder to reason about implementing new functionality on top of a more or less disintegrated structure.
+
+The last assignments for part 1 aren't implemented.
+
+## Files and types - Needs a rework.
 For now the code has it's state contained within two structs:
 - CPU instruction cache:
     - Memory
@@ -39,7 +51,7 @@ For now the code has it's state contained within two structs:
 
 The instructions themselves could be written as objects, but as it's a project that is growing they are handled directly. Making them into objects at some point would be preferable, to get all the benefits of having them read serially and h
     
-# Tasks in main
+## Tasks in main
 1. User interaction
 2. Create and init CPU state
 3. Creating Instruction cache and loading instructions
