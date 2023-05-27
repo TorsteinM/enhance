@@ -40,4 +40,7 @@ BYTES_HANDLED handle_general_immediate(memory_segment memseg, cpu_state &state);
 
 BYTES_HANDLED handle_jump_instruction(memory_segment memseg, cpu_state& state);
 
+BYTES_HANDLED handle_immediate_memory(memory_segment memseg, cpu_state& state);
+
+
 #endif

@@ -14,7 +14,7 @@ const char* operation_names[32] = {
     "dec",  //  9
     "push", // 10
     "pop",  // 11
-    "N/A",  // 12
+    "mov",  // 12
     "N/A",     // 13
     "N/A",     // 14
     "N/A",     // 15

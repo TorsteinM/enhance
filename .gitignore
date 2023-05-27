@@ -1,5 +1,8 @@
 computer_enhance
-assignments/build
-assignments/build_msvc
-assignments/code
+***/build
+***/build_msvc
+***/msvc_build
+***/temp
+***/code
+***/.vscode
 assignments/.vscode

@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <iomanip>
 #include "typedefs.h"
 #include "reg_names.h"
 
@@ -64,8 +65,9 @@ struct cpu_state {
         int16_t register_as_wides[8];
         int8_t register_as_bytes[16];
     };
-    
+    uint16_t* memory;
     flags_t flags;
+
 };
 
 enum operation{ 
@@ -105,5 +107,20 @@ enum operation{
 
 
 void display_regs(cpu_state);
-void update_value_to_register(cpu_state &, operation, u32, u32, bool);
+void display_memory_5_lines(cpu_state);
+
+
+// Functions to simulate instructions and work on the state of the cpu.
+void simulate_value_to_register(cpu_state &, operation, u32, u32, bool);
+void simulate_register_to_register(cpu_state &, operation, u32, u32, bool);
+void simulate_memory_to_register(cpu_state &, operation, u32, u32, bool);
+void simulate_value_to_memory(cpu_state &, u32 value, u32 address, bool);
+uint32_t simulate_value_from_memory(cpu_state &, u32 address, bool);
+
+
+
+// Functions to check and set flags
+void check_flags_general(cpu_state &, u32, bool);
+
+
 #endif // CPU_STATE_H
